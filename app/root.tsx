@@ -1,6 +1,5 @@
 import type { Route } from './+types/root'
 import { ColorSchemeScript, MantineProvider } from '@mantine/core'
-import { Notifications } from '@mantine/notifications'
 import {
   isRouteErrorResponse,
   Links,
@@ -11,7 +10,6 @@ import {
 } from 'react-router'
 import './app.css'
 import '@mantine/core/styles.css'
-import '@mantine/notifications/styles.css'
 
 export const links: Route.LinksFunction = () => []
 
@@ -27,7 +25,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         <MantineProvider>
-          <Notifications />
           {children}
         </MantineProvider>
         <ScrollRestoration />

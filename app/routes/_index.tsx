@@ -8,14 +8,19 @@ export function meta({}: Route.MetaArgs) {
   ]
 }
 
-export default function Index() {
+export async function loader({}: Route.LoaderArgs) {
+  const res = await fetch('http://localhost:5174/api/hello')
+  return res.text()
+}
+
+export default function Index({ loaderData }: Route.ComponentProps) {
   return (
     <AppShell
       padding="md"
       withBorder
     >
       <AppShell.Main>
-        Hello!
+        {loaderData}
       </AppShell.Main>
     </AppShell>
   )
