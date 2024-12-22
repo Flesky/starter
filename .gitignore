@@ -6,3 +6,6 @@
 /build/
 
 .idea
+
+.env
+/server/db/sqlite.db
