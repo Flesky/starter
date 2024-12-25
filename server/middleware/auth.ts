@@ -1,16 +1,23 @@
 import { createMiddleware } from 'hono/factory'
 import { auth } from '../lib/auth'
 
-export const authMiddleware = createMiddleware(
+export const authMiddleware = createMiddleware<{
+  Variables: {
+    session: typeof auth.$Infer.Session.session | null
+    user: typeof auth.$Infer.Session.user | null
+  }
+}>(
   async (c, next) => {
     const session = await auth.api.getSession({ headers: c.req.raw.headers })
 
     if (!session) {
-      return c.text('401 Unauthorized', 401)
+      c.set('user', null)
+      c.set('session', null)
+      return next()
     }
 
-    c.set('session', session.session)
     c.set('user', session.user)
-    await next()
+    c.set('session', session.session)
+    return next()
   },
 )
